@@ -1,0 +1,8 @@
+---
+gopass_pack_ext: deb
+gopass_packages_list:
+    - gnupg2 #for key crypto
+    - scdaemon #smart card (yubikey) integration
+    - pcscd #smart card handling (yubikey)
+    - git #store sync backend
+    - rng-tools #true random numbers from HW

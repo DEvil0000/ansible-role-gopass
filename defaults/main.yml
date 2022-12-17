@@ -1,5 +1,5 @@
 ---
 gopass_version: 1.12.0
 gopass_tag: "v{{ gopass_version }}"
-gopass_deb_name: "gopass_{{ gopass_version }}_linux_amd64.deb"
-gopass_url: "https://github.com/gopasspw/gopass/releases/download/{{ gopass_tag }}/{{ gopass_deb_name }}"
+gopass_pack_name: "gopass_{{ gopass_version }}_linux_amd64.{{ gopass_pack_ext }}"
+gopass_url: "https://github.com/gopasspw/gopass/releases/download/{{ gopass_tag }}/{{ gopass_pack_name }}"

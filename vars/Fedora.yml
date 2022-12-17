@@ -1,0 +1,8 @@
+---
+gopass_pack_ext: rpm
+gopass_packages_list:
+    - gnupg2 #for key crypto
+    - opensc #smart card (yubikey) integration
+    - pcsc-lite #smart card handling (yubikey)
+    - git #store sync backend
+    - rng-tools #true random numbers from HW

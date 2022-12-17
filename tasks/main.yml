@@ -1,24 +1,33 @@
 ---
+- name: gather os specific variables
+  include_vars: "{{ item }}"
+  with_first_found:
+    - "{{ ansible_distribution }}-{{ ansible_distribution_major_version}}.yml"
+    - "{{ ansible_distribution }}.yml"
+    - "{{ ansible_os_family }}.yml"
+
 - name: install packages to use gpg with a smartcard
   become: yes
   package:
     name: "{{item}}"
     state: present
-  with_items:
-    - gnupg2 #for key crypto
-    - scdaemon #smart card (yubikey) integration
-    - pcscd #smart card handling (yubikey)
-    - git #store sync backend
-    - rng-tools #true random numbers from HW
+  with_items: "{{ gopass_packages_list }}"
+
+- name: configure scdaemon
+  ansible.builtin.lineinfile:
+    path: ~/.gnupg/scdaemon.conf
+    regexp: '^pcsc-driver /usr/lib64/libpcsclite.so.1'
+    line: pcsc-driver /usr/lib64/libpcsclite.so.1
+  when: ansible_os_family == "Fedora"
 
 - name: download gopass from github
   get_url:
     url: "{{ gopass_url }}"
-    dest: "/tmp/{{ gopass_deb_name }}"
+    dest: "/tmp/{{ gopass_pack_name }}"
     mode: '0440'
 
 - name: install gopass package
   become: yes
-  apt:
-    deb: "/tmp/{{ gopass_deb_name }}"
-  
+  package:
+    name: "/tmp/{{ gopass_pack_name }}"
+    disable_gpg_check: True

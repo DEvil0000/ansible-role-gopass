@@ -16,8 +16,8 @@
 - name: configure scdaemon
   ansible.builtin.lineinfile:
     path: ~/.gnupg/scdaemon.conf
-    regexp: '^pcsc-driver /usr/lib64/libpcsclite.so.1'
-    line: pcsc-driver /usr/lib64/libpcsclite.so.1
+    regexp: '^pcsc-shared'
+    line: pcsc-shared
   when: ansible_os_family == "Fedora"
 
 - name: download gopass from github
